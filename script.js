@@ -38,30 +38,30 @@ async function syncLetterboxd() {
     const feedContainer = document.getElementById('letterboxd-feed');
     const USER = "odinsonn";
     const RSS_URL = `https://letterboxd.com/${USER}/rss/`;
-    const PROXY_URL = "https://corsproxy.io/?";
+    // Menggunakan proxy allorigins untuk bypass blokir 403
+    const PROXY_URL = "https://api.allorigins.win/get?url=";
     
     try {
         const response = await fetch(PROXY_URL + encodeURIComponent(RSS_URL));
-        const xmlText = await response.text();
+        const data = await response.json(); 
         const parser = new DOMParser();
-        const xmlDoc = parser.parseFromString(xmlText, "text/xml");
+        const xmlDoc = parser.parseFromString(data.contents, "text/xml"); 
         const items = xmlDoc.querySelectorAll("item");
         
-        if (items.length > 0) {
-            feedContainer.innerHTML = ''; 
-            for (let i = 0; i < Math.min(items.length, 3); i++) {
-                const title = items[i].querySelector("title").textContent.split(' - ')[0];
-                const link = items[i].querySelector("link").textContent;
-                feedContainer.innerHTML += `
-                    <div style="margin-bottom: 10px;">
-                        <a href="${link}" target="_blank" style="text-decoration:none; color:white;">
-                            <strong style="font-size:0.8rem">${title}</strong>
-                        </a>
-                    </div>
-                `;
-            }
+        feedContainer.innerHTML = '';
+        for (let i = 0; i < Math.min(items.length, 3); i++) {
+            const title = items[i].querySelector("title").textContent.split(' - ')[0];
+            const link = items[i].querySelector("link").textContent;
+            feedContainer.innerHTML += `
+                <div style="margin-bottom: 10px;">
+                    <a href="${link}" target="_blank" style="text-decoration:none; color:white;">
+                        <strong style="font-size:0.8rem">${title}</strong>
+                    </a>
+                </div>
+            `;
         }
     } catch (e) {
+        console.error("Gagal:", e);
         feedContainer.innerHTML = `<a href="https://letterboxd.com/${USER}/" target="_blank" style="color:var(--accent)">LIHAT_PROFIL</a>`;
     }
 }
