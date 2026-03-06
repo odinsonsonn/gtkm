@@ -23,11 +23,11 @@ async function syncSpotify() {
                     <div>
                         <strong style="display:block; color:var(--accent); font-size:1.1rem">${sp.song}</strong>
                         <span class="mono">${sp.artist}</span>
-                        <div style="margin-top:10px; font-size:0.6rem; opacity:0.5">ON_ALBUM: ${sp.album}</div>
+                        <div style="margin-top:10px; font-size:0.6rem; opacity:0.5">ON ALBUM: ${sp.album}</div>
                     </div>
                 `;
             } else {
-                container.innerHTML = `<p class="mono">NOT_LISTENING_ANYTHING</p>`;
+                container.innerHTML = `<p class="mono">NOT LISTENING ANYTHING</p>`;
             }
         }
     } catch (e) { 
@@ -53,5 +53,15 @@ window.addEventListener('scroll', () => {
     navLinks.forEach(l => {
         l.classList.remove('active');
         if (l.getAttribute('href').includes(current)) l.classList.add('active');
+    });
+});
+// Fungsi untuk menghilangkan underscore dan menggantinya dengan spasi
+document.addEventListener('DOMContentLoaded', () => {
+    const allTextNodes = document.querySelectorAll('h1, h2, h3, p, span, strong, a, .card-header');
+    
+    allTextNodes.forEach(node => {
+        if (node.children.length === 0 && node.innerText.includes('_')) {
+            node.innerText = node.innerText.replace(/_/g, ' ');
+        }
     });
 });
