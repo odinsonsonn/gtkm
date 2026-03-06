@@ -103,3 +103,18 @@ footer { text-align: center; padding: 50px; opacity: 0.2; font-size: 0.7rem; let
     background-color: var(--accent);
     color: black;
 }
+
+.recent-list { 
+    margin-top: 10px; 
+    font-size: 0.8rem; 
+}
+.track-item { 
+    padding: 8px 0; 
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05); 
+    display: flex; 
+    flex-direction: column; 
+}
+.track-item span { 
+    font-size: 0.65rem; 
+    opacity: 0.6; 
+}
