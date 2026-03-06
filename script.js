@@ -16,11 +16,12 @@ async function syncSpotify() {
             statusText.innerText = data.data.discord_status.toUpperCase();
             const sp = data.data.spotify;
             
-            if (sp) {
+            // Cek apakah sp ada DAN apakah ada judul lagunya
+            if (sp && sp.song) {
                 container.innerHTML = `
                     <img src="${sp.album_art_url}" class="spotify-img">
                     <div>
-                        <strong style="display:block; color:var(--accent); font-size:1.1rem">${sp.track}</strong>
+                        <strong style="display:block; color:var(--accent); font-size:1.1rem">${sp.song}</strong>
                         <span class="mono">${sp.artist}</span>
                         <div style="margin-top:10px; font-size:0.6rem; opacity:0.5">ON_ALBUM: ${sp.album}</div>
                     </div>
@@ -30,9 +31,10 @@ async function syncSpotify() {
             }
         }
     } catch (e) { 
-        console.error("Lanyard error: Pastikan Discord kamu sedang online dan Spotify terhubung."); 
+        console.error("Lanyard error:", e);
     }
 }
+syncSpotify();
 
 
 // --- INITIALIZE ---
