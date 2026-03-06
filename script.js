@@ -36,37 +36,36 @@ async function syncSpotify() {
 
 async function syncLetterboxd() {
     const feedContainer = document.getElementById('letterboxd-feed');
-    const RSS_URL = `https://letterboxd.com/odinsonn/rss/`;
-    // Gunakan proxy allorigins dengan format 'raw' agar lebih mudah dibaca
-    const API_URL = `https://api.allorigins.win/raw?url=${encodeURIComponent(RSS_URL)}`;
+    const USER = "odinsonn";
+    const RSS_URL = `https://letterboxd.com/${USER}/rss/`;
+    const PROXY_URL = "https://corsproxy.io/?";
     
     try {
-        const response = await fetch(API_URL);
+        const response = await fetch(PROXY_URL + encodeURIComponent(RSS_URL));
         const xmlText = await response.text();
         const parser = new DOMParser();
         const xmlDoc = parser.parseFromString(xmlText, "text/xml");
         const items = xmlDoc.querySelectorAll("item");
         
-        feedContainer.innerHTML = ''; // Hapus Loading...
-        
-        // Ambil 3 film terbaru
-        for (let i = 0; i < Math.min(items.length, 3); i++) {
-            const title = items[i].querySelector("title").textContent.split(' - ')[0];
-            const link = items[i].querySelector("link").textContent;
-            
-            feedContainer.innerHTML += `
-                <div style="margin-bottom: 10px;">
-                    <a href="${link}" target="_blank" style="text-decoration:none; color:white;">
-                        <strong style="font-size:0.9rem">${title}</strong>
-                    </a>
-                </div>
-            `;
+        if (items.length > 0) {
+            feedContainer.innerHTML = ''; 
+            for (let i = 0; i < Math.min(items.length, 3); i++) {
+                const title = items[i].querySelector("title").textContent.split(' - ')[0];
+                const link = items[i].querySelector("link").textContent;
+                feedContainer.innerHTML += `
+                    <div style="margin-bottom: 10px;">
+                        <a href="${link}" target="_blank" style="text-decoration:none; color:white;">
+                            <strong style="font-size:0.8rem">${title}</strong>
+                        </a>
+                    </div>
+                `;
+            }
         }
     } catch (e) {
-        console.error("Error:", e);
-        feedContainer.innerHTML = `<a href="https://letterboxd.com/odinsonn/" target="_blank">LIHAT_PROFIL</a>`;
+        feedContainer.innerHTML = `<a href="https://letterboxd.com/${USER}/" target="_blank" style="color:var(--accent)">LIHAT_PROFIL</a>`;
     }
 }
+syncLetterboxd();
 
 // --- INITIALIZE ---
 window.onload = () => {
