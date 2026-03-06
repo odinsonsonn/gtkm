@@ -69,3 +69,37 @@ section { min-height: 100vh; padding: 120px 10% 80px; }
 .btn-glow:hover { background: var(--accent); color: black; box-shadow: 0 0 20px var(--accent); }
 
 footer { text-align: center; padding: 50px; opacity: 0.2; font-size: 0.7rem; letter-spacing: 2px; }
+.letterboxd-btn {
+    display: inline-block;
+    padding: 12px 24px;
+    margin-top: 10px;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.letterboxd-btn:hover {
+    background-color: var(--accent);
+    color: black;
+}
+.letterboxd-btn-long {
+    display: block;
+    width: 100%;
+    padding: 15px 0;
+    margin-top: 15px;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    text-decoration: none;
+    border-radius: 50px;
+    text-align: center;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.letterboxd-btn-long:hover {
+    background-color: var(--accent);
+    color: black;
+}
